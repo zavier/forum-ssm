@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.forum.dao.PostMapper" >
+  <resultMap id="BaseResultMap" type="com.forum.entity.Post" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="post_text" property="postText" jdbcType="VARCHAR" />
+    <result column="post_title" property="postTitle" jdbcType="VARCHAR" />
+    <result column="post_type" property="postType" jdbcType="INTEGER" />
+    <result column="board_id" property="boardId" jdbcType="VARCHAR" />
+    <result column="topic_id" property="topicId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, create_time, post_text, post_title, post_type, board_id, topic_id, user_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_post
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByTopicId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_post
+    where topic_id = #{topicId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_post
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.forum.entity.Post" >
+    insert into t_post (id, create_time, post_text, 
+      post_title, post_type, board_id, 
+      topic_id, user_id)
+    values (#{id,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{postText,jdbcType=VARCHAR}, 
+      #{postTitle,jdbcType=VARCHAR}, #{postType,jdbcType=INTEGER}, #{boardId,jdbcType=VARCHAR}, 
+      #{topicId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.forum.entity.Post" >
+    insert into t_post
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="postText != null" >
+        post_text,
+      </if>
+      <if test="postTitle != null" >
+        post_title,
+      </if>
+      <if test="postType != null" >
+        post_type,
+      </if>
+      <if test="boardId != null" >
+        board_id,
+      </if>
+      <if test="topicId != null" >
+        topic_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="postText != null" >
+        #{postText,jdbcType=VARCHAR},
+      </if>
+      <if test="postTitle != null" >
+        #{postTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="postType != null" >
+        #{postType,jdbcType=INTEGER},
+      </if>
+      <if test="boardId != null" >
+        #{boardId,jdbcType=VARCHAR},
+      </if>
+      <if test="topicId != null" >
+        #{topicId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.forum.entity.Post" >
+    update t_post
+    <set >
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="postText != null" >
+        post_text = #{postText,jdbcType=VARCHAR},
+      </if>
+      <if test="postTitle != null" >
+        post_title = #{postTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="postType != null" >
+        post_type = #{postType,jdbcType=INTEGER},
+      </if>
+      <if test="boardId != null" >
+        board_id = #{boardId,jdbcType=VARCHAR},
+      </if>
+      <if test="topicId != null" >
+        topic_id = #{topicId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.forum.entity.Post" >
+    update t_post
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      post_text = #{postText,jdbcType=VARCHAR},
+      post_title = #{postTitle,jdbcType=VARCHAR},
+      post_type = #{postType,jdbcType=INTEGER},
+      board_id = #{boardId,jdbcType=VARCHAR},
+      topic_id = #{topicId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

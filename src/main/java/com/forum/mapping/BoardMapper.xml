@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.forum.dao.BoardMapper" >
+  <resultMap id="BaseResultMap" type="com.forum.entity.Board" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="board_desc" property="boardDesc" jdbcType="VARCHAR" />
+    <result column="board_name" property="boardName" jdbcType="VARCHAR" />
+    <result column="topic_num" property="topicNum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, board_desc, board_name, topic_num
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_board
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByBoardName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_board
+    where board_name = #{boardName,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_board
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_board
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.forum.entity.Board" >
+    insert into t_board (id, board_desc, board_name, 
+      topic_num)
+    values (#{id,jdbcType=VARCHAR}, #{boardDesc,jdbcType=VARCHAR}, #{boardName,jdbcType=VARCHAR}, 
+      #{topicNum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.forum.entity.Board" >
+    insert into t_board
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="boardDesc != null" >
+        board_desc,
+      </if>
+      <if test="boardName != null" >
+        board_name,
+      </if>
+      <if test="topicNum != null" >
+        topic_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="boardDesc != null" >
+        #{boardDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="boardName != null" >
+        #{boardName,jdbcType=VARCHAR},
+      </if>
+      <if test="topicNum != null" >
+        #{topicNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.forum.entity.Board" >
+    update t_board
+    <set >
+      <if test="boardDesc != null" >
+        board_desc = #{boardDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="boardName != null" >
+        board_name = #{boardName,jdbcType=VARCHAR},
+      </if>
+      <if test="topicNum != null" >
+        topic_num = #{topicNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.forum.entity.Board" >
+    update t_board
+    set board_desc = #{boardDesc,jdbcType=VARCHAR},
+      board_name = #{boardName,jdbcType=VARCHAR},
+      topic_num = #{topicNum,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
