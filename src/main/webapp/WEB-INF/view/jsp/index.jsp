@@ -23,6 +23,8 @@
 
     <!-- Bootstrap core CSS -->
     <link href="<%=contextPath %>/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    
+    <link href="<%=contextPath %>/css/bootstrap/bootstrap-table.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="<%=contextPath %>/css/dashboard.css" rel="stylesheet">
@@ -50,8 +52,8 @@
 		  </shiro:authenticated>
 		  </div>
 		  <br />
-          <div class="table-responsive">
-            <table class="table table-striped">
+          <div class="table-responsive" id="bootstrapTableStation">
+            <table class="table table-striped" id="table-pagination">
               <thead>
                 <tr>
                   <th class="col-sm-7">标题</th>
@@ -76,6 +78,8 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="<%=contextPath %>/js/jquery/jquery.min.js"></script>
     <script src="<%=contextPath %>/js/bootstrap/bootstrap.min.js"></script>
+    <script src="<%=contextPath %>/js/bootstrap/bootstrap-table.js"></script>
+    <script src="<%=contextPath %>/js/bootstrap/bootstrap-table-zh-CN.js"></script>
     <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
     <%-- <script src="<%=contextPath %>/assets/js/vendor/holder.min.js"></script> --%>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
