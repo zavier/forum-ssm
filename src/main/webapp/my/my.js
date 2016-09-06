@@ -7,11 +7,11 @@ function checkRegisterInfo(){
 	var trim_username = $.trim(username);
 	var password = $("#inputPassword").val();
 	if(trim_username.length < 6 || trim_username.length > 8){
-		alert("账号应6~8位!");
+		layer.msg("账号应6~8位!");
 		return false;
 	}
 	if(password.length < 6 || password.length > 12){
-		alert("密码应6~12位!");
+		layer.msg("密码应6~12位!");
 		return false;
 	}
 	return true;
@@ -21,22 +21,22 @@ function checkIfLogined(){
 	var loginButtonText = $("#loginLink").text();
 	if(loginButtonText != '登录'){					//已经登录
 		var userId = $("#loginedUserId").text();
-		$("#loginLink").attr('href', contextPath + '/showUserInformation/' + userId);
+		$("#loginLink").attr('href', contextPath + '/user/showUserInformation/' + userId);
 	}else{											//还未登录
-		$("#loginLink").attr('href', contextPath + '/login/loginPage');
+		$("#loginLink").attr('href', contextPath + '/user/login/loginPage');
 	}
 	
 	var registerButtonText = $("#registerLink").text();
 	if(registerButtonText == '注册'){
-		$("#registerLink").attr('href',contextPath + '/registerPage');
+		$("#registerLink").attr('href',contextPath + '/user/registerPage');
 	}else if(registerButtonText == '注销'){
-		$("#registerLink").attr('href',contextPath + '/login/doLogout');
+		$("#registerLink").attr('href',contextPath + '/user/login/doLogout');
 	}
 }
 
 function initSearchBoardAndTopic(){
 	//查询并列出所有版块及对应主题帖
-	var boardUrl = '/searchAllBoards';
+	var boardUrl = '/board/searchAllBoards';
 	var boardReqType = 'GET';
 	var boardParams = new Object();
 	boardParams.page = 1;
@@ -57,7 +57,7 @@ function listAllBoardsAndTopic(data){
 	$('#boardList li:first').addClass('active');
 	
 	//对添加主题帖的链接进行初始化
-	$("#posting").attr('href', contextPath + '/board/addTopicPage/' + data[0].id);
+	$("#posting").attr('href', contextPath + '/topic/addTopicPage/' + data[0].id);
 	
 	//对管理主题帖的链接进行初始化
 	$("#updateBoardPage").attr('onclick', 'updateBoardPage("' + data[0].id + '")');
@@ -68,7 +68,7 @@ function listAllBoardsAndTopic(data){
 
 //查询并展示某版块下的主题帖
 function listBoardTopic(boardId){
-	var boardUrl = '/board/listBoardTopics/' + boardId;
+	var boardUrl = '/topic/listBoardTopics/' + boardId;
 	var boardReqType = 'GET';
 	var boardParams = new Object();
 	boardParams.page = 1;
@@ -116,7 +116,7 @@ function changeBoardColor(key, boardId){
 	$('#boardList li:eq('+ key + ')').addClass('active');
 	
 	//根据选择的版块，对添加主题帖的链接进行更改
-	$("#posting").attr('href', contextPath + '/board/addTopicPage/' + boardId);
+	$("#posting").attr('href', contextPath + '/topic/addTopicPage/' + boardId);
 	
 	//根据选择的板块，对管理主题帖的事件进行更改
 	$("#updateBoardPage").attr('onclick', 'updateBoardPage("' + boardId + '")');
@@ -163,7 +163,7 @@ function updateBoardPage(boardId){
 	layer.open({
 		title : '管理板块',
 		type : 2,
-		content : 'forum/updateBoardPage/' + boardId,
+		content : 'board/updateBoardPage/' + boardId,
 		area : ['600px', '335px'],
 	});
 }
@@ -233,7 +233,7 @@ function deleteBoard(boardId){
 	    btn: ['确定','取消'] //按钮
 	}, function(){
 		//进行删除操作
-		var url = '/forum/deleteBoard';
+		var url = '/board/deleteBoard';
 		var params = new Object();
 		params.boardId = boardId;
 		commonAjax(url, params, 'GET', showResult);

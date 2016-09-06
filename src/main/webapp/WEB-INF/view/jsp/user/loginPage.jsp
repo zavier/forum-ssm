@@ -17,7 +17,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>${pageAction}</title>
+    <title>登录</title>
 
     <!-- Bootstrap core CSS -->
     <link href="<%=contextPath %>/css/bootstrap/bootstrap.min.css" rel="stylesheet">
@@ -40,8 +40,8 @@
 
     <div class="container">
 
-      <form class="form-signin" action="register" method="post" >
-        <h2 class="form-signin-heading col-md-4 col-md-offset-4">注册</h2>
+      <form class="form-signin" action="<%=request.getContextPath() %>/user/login/doLogin" method="post" >
+        <h2 class="form-signin-heading col-md-4 col-md-offset-4">登录</h2>
         <label for="inputUserName" class="sr-only">userName</label>
         <input type="text" id="inputUserName" name="userName" class="form-control" placeholder="用户名(大于6位)" required autofocus>
         <c:if test="${!empty errorMsg }">
@@ -51,13 +51,13 @@
         <input type="password" id="inputPassword" name="password" class="form-control" placeholder="密码(大于6位)" required>
         <div class="checkbox">
         </div>
-        <button id="submit_button" class="btn btn-lg btn-primary btn-block" type="submit" onclick="return checkRegisterInfo();">注册</button>
+        <button id="submit_button" class="btn btn-lg btn-primary btn-block" type="submit" onclick="return checkRegisterInfo();">登录</button>
       </form>
     </div> <!-- /container -->
 
 	<script src="<%=contextPath %>/js/jquery/jquery.min.js"></script>
-	<script src="<%=contextPath %>/js/bootstrap/bootstrap.min.js"></script>
 	<script src="<%=contextPath %>/my/my.js"></script>
+	<script src="<%=contextPath %>/layer/layer.js"></script>
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <%-- <script src="<%=contextPath %>/assets/js/ie10-viewport-bug-workaround.js"></script> --%>

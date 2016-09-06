@@ -15,7 +15,8 @@ import com.forum.dao.LoginLogMapper;
 import com.forum.dao.UserMapper;
 import com.forum.entity.LoginLog;
 import com.forum.entity.User;
-import com.forum.util.CommonUtil;
+import com.forum.util.MD5Util;
+import com.forum.util.UUIDUtil;
 
 // 用户管理服务器，负责查询用户、注册用户、锁定用户等操作
 @Service
@@ -48,11 +49,11 @@ public class UserService {
         if (findUser != null) {
             return UserStatus.USERNAME_EXISTED;
         } else {
-            String primaryKey = CommonUtil.getUUIDPrimaryKey();
+            String primaryKey = UUIDUtil.getUUIDPrimaryKey();
             user.setId(primaryKey);
             user.setUserType(1);
             user.setCredit(5);
-            user.setPassword(CommonUtil.md5(user.getPassword()));
+            user.setPassword(MD5Util.md5(user.getPassword()));
             userMapper.insert(user);
             return UserStatus.CORRECT_USER;
         }
@@ -92,7 +93,7 @@ public class UserService {
     @Transactional
     public void loginSuccess(String username, HttpServletRequest request) {
         LoginLog loginLog = new LoginLog();
-        loginLog.setId(CommonUtil.getUUIDPrimaryKey());
+        loginLog.setId(UUIDUtil.getUUIDPrimaryKey());
         loginLog.setIp(request.getRemoteAddr());
         loginLog.setLoginDatetime(new Date());
         User findUser = userMapper.selectByUserName(username);

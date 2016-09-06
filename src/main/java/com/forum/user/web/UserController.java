@@ -21,14 +21,15 @@ import com.forum.entity.User;
 import com.forum.user.service.UserService;
 
 @Controller
-public class UserInformationController {
+@RequestMapping(value = "/user")
+public class UserController {
 
-    private static final Logger log = LoggerFactory.getLogger(UserInformationController.class);
+    private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/user/getUserName/{userId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/getUserName/{userId}", method = RequestMethod.GET)
     @ResponseBody
     public User getUserName(@PathVariable String userId) {
         return userService.findById(userId);
@@ -40,11 +41,11 @@ public class UserInformationController {
         // User user = userService.findById(userId);
         // String pictureUrl = user.getPictureUrl();
         // view.addObject("pictureUrl", pictureUrl);
-        view.setViewName("showUserInformation");
+        view.setViewName("/user/showUserInformation");
         return view;
     }
 
-    @RequestMapping(value = "/user/uploadPicture/{userId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/uploadPicture/{userId}", method = RequestMethod.POST)
     public String uploadPicture(@PathVariable String userId, HttpServletRequest request,
             @RequestParam(value = "file") MultipartFile file) {
         if (file.isEmpty()) {
@@ -81,7 +82,12 @@ public class UserInformationController {
         return "redirect:/";
     }
 
-    // 将用户的头像图片的地址存储到用户表中
+    /**
+     * 将用户的头像图片的地址存储到用户表中
+     * 
+     * @param userId
+     * @param url
+     */
     private void savePictureUrl(String userId, String url) {
         User user = userService.findById(userId);
         user.setPictureUrl(url);

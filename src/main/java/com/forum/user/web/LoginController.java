@@ -18,10 +18,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.forum.user.service.UserService;
-import com.forum.util.CommonUtil;
+import com.forum.util.MD5Util;
 
-// 用户登录、注销的控制器
+/**
+ * 用户登录、注销的控制器
+ * 
+ * @author zhangbin-neu
+ *
+ */
 @Controller
+@RequestMapping(value = "/user")
 public class LoginController {
 
     private static final Logger log = LoggerFactory.getLogger(LoginController.class);
@@ -29,21 +35,25 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    // 用户登录页面
+    /**
+     * 用户登录页面
+     * 
+     * @return
+     */
     @RequestMapping(value = "/login/loginPage")
     public String registerPage() {
-        return "loginPage";
+        return "user/loginPage";
     }
 
-    /*
-     * 用户登录
+    /**
+     * 用户登录处理
      */
     @RequestMapping(value = "/login/doLogin")
     public ModelAndView login(HttpServletRequest request, String userName, String password) {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("loginPage"); // 设置登录失败是返回的界面
+        mav.setViewName("user/loginPage"); // 设置登录失败是返回的界面
 
-        String md5Password = CommonUtil.md5(password);
+        String md5Password = MD5Util.md5(password);
         UsernamePasswordToken token = new UsernamePasswordToken(userName, md5Password);
         Subject subject = SecurityUtils.getSubject();
         try {
@@ -85,7 +95,7 @@ public class LoginController {
         return mav;
     }
 
-    /*
+    /**
      * 用户注销
      */
     @RequestMapping("/login/doLogout")

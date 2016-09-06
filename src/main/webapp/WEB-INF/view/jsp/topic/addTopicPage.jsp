@@ -17,7 +17,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>登录</title>
+    <title>发帖</title>
 
     <!-- Bootstrap core CSS -->
     <link href="<%=contextPath %>/css/bootstrap/bootstrap.min.css" rel="stylesheet">
@@ -40,18 +40,17 @@
 
     <div class="container">
 
-      <form class="form-signin" action="<%=request.getContextPath() %>/login/doLogin" method="post" >
-        <h2 class="form-signin-heading col-md-4 col-md-offset-4">登录</h2>
-        <label for="inputUserName" class="sr-only">userName</label>
-        <input type="text" id="inputUserName" name="userName" class="form-control" placeholder="用户名(大于6位)" required autofocus>
-        <c:if test="${!empty errorMsg }">
-			<div style="color:red">${errorMsg }</div>
-		</c:if>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="密码(大于6位)" required>
-        <div class="checkbox">
-        </div>
-        <button id="submit_button" class="btn btn-lg btn-primary btn-block" type="submit" onclick="return checkRegisterInfo();">登录</button>
+      <form action="<%=contextPath %>/topic/addTopic/${boardId}" method="post" >
+        <h2 class="form-signin-heading col-md-4 col-md-offset-5">发帖</h2>
+        <div class="form-group">
+		    <label for="topicTitle" class="sr-only">topicTitle</label>
+		    <input type="text" class="form-control" id="topicTitle" name="topicTitle" placeholder="在此输入标题"></input>
+		</div>
+        <div class="form-group">
+		    <label for="topicContent" class="sr-only">topicContent</label>
+		    <textarea rows="10" class="form-control" id="topicContent" name="topicContent" placeholder="在此输入正文内容"></textarea>
+		</div>
+        <button id="submit_button" class="btn btn-lg btn-primary btn-block" type="submit" onclick="return checkTopicInfo();">提交</button>
       </form>
     </div> <!-- /container -->
 

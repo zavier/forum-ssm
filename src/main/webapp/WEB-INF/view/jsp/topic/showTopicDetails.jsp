@@ -41,7 +41,7 @@
 
   <body>
 
-    <jsp:include page="commonNavigationBar.jsp"></jsp:include>
+    <jsp:include page="../commonNavigationBar.jsp"></jsp:include>
 
     <div class="container-fluid">
       <div class="row">

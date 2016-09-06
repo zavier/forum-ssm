@@ -1,19 +1,8 @@
 package com.forum.util;
 
-import java.util.UUID;
-
 import org.apache.shiro.crypto.hash.Md5Hash;
 
-public class CommonUtil {
-
-    /**
-     * 获取随机的uuid作为主键
-     * 
-     * @return 生成的主键
-     */
-    public static String getUUIDPrimaryKey() {
-        return UUID.randomUUID().toString().trim().replaceAll("-", "");
-    }
+public final class MD5Util {
 
     /**
      * 使用MD5进行加密

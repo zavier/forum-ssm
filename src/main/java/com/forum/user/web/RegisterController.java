@@ -13,8 +13,14 @@ import org.springframework.web.servlet.ModelAndView;
 import com.forum.entity.User;
 import com.forum.user.service.UserService;
 
-// 用户注册的控制器
+/**
+ * 用户注册的控制器
+ * 
+ * @author zhangbin-neu
+ *
+ */
 @Controller
+@RequestMapping(value = "/user")
 public class RegisterController {
 
     private static final Logger log = LoggerFactory.getLogger(RegisterController.class);
@@ -22,13 +28,23 @@ public class RegisterController {
     @Autowired
     private UserService userService;
 
-    // 用户注册的页面
+    /**
+     * 用户注册的页面
+     * 
+     * @return
+     */
     @RequestMapping(value = "/registerPage")
     public String registerPage() {
-        return "/registerPage";
+        return "/user/registerPage";
     }
 
-    // 用户注册
+    /**
+     * 用户注册处理
+     * 
+     * @param request
+     * @param user
+     * @return
+     */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView register(HttpServletRequest request, User user) {
         ModelAndView view = new ModelAndView();
@@ -39,7 +55,7 @@ public class RegisterController {
                 break;
             case USERNAME_EXISTED:
                 log.info("注册失败，用户名已存在");
-                view.setViewName("/registerPage");
+                view.setViewName("/user/registerPage");
                 view.addObject("errorMsg", "用户名已存在！");
                 break;
             default:
