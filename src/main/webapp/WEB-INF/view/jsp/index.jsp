@@ -43,11 +43,11 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 		  <br />
 		  <div class="text-right">
-		  <shiro:hasRole name="superadmin">
+		  <shiro:authenticated>
 		  	<a href="javascript:void(0);" id="addBoardPage" onclick="addBoardPage();"  class="btn btn-primary">新建版块</a>
-		  </shiro:hasRole>
 		  	<a href="javascript:void(0);" id="updateBoardPage" class="btn btn-primary">管理版块</a>
           	<a href="<%=contextPath %>/board/addTopicPage" id="posting" class="btn btn-primary">发表主题帖</a>
+		  </shiro:authenticated>
 		  </div>
 		  <br />
           <div class="table-responsive">

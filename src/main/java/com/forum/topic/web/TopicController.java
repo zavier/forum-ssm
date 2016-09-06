@@ -16,7 +16,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.forum.entity.Topic;
 import com.forum.entity.User;
 import com.forum.topic.service.TopicService;
+import com.forum.user.service.UserService;
 import com.forum.util.UUIDUtil;
+import com.forum.util.entity.TopicView;
 
 /*
  * 主题帖控制器 包括发表主题帖子、回复帖子、删除帖子、设精华主题帖等
@@ -28,6 +30,9 @@ public class TopicController {
     @Autowired
     private TopicService topicService;
 
+    @Autowired
+    private UserService userService;
+
     /**
      * 列出论坛模块下的主题帖子
      * 
@@ -37,8 +42,8 @@ public class TopicController {
     @RequestMapping(value = "/listBoardTopics/{boardId}", method = RequestMethod.GET,
             produces = "application/json")
     @ResponseBody
-    public List<Topic> listBoardTopics(@PathVariable String boardId) {
-        return topicService.getPagedTopics(boardId);
+    public List<TopicView> listBoardTopics(@PathVariable String boardId) {
+        return topicService.getTopicViewByBoardId(boardId);
     }
 
     /**
@@ -88,8 +93,8 @@ public class TopicController {
     public ModelAndView showTopicDetails(@PathVariable String topicId) {
         ModelAndView view = new ModelAndView();
         view.setViewName("/topic/showTopicDetails");
-        Topic topic = topicService.getTopicById(topicId);
-        view.addObject("topic", topic);
+        TopicView topicView = topicService.getTopicViewByTopicId(topicId);
+        view.addObject("topicView", topicView);
         return view;
     }
 }

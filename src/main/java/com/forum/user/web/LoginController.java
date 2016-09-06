@@ -101,6 +101,7 @@ public class LoginController {
     @RequestMapping("/login/doLogout")
     public String logout(HttpServletRequest request) {
         request.getSession().removeAttribute("LOGINUSER");
+        SecurityUtils.getSubject().logout();
         return "redirect:/";
     }
 }

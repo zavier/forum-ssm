@@ -81,33 +81,10 @@ function listTopics(data){
 	var html = '';
 	$("tbody").empty();
 	$.each(data, function(key, value){
-		html += '<tr><td><a href="showTopicDetails/' + value.id + '">' 
-			 + value.topicTitle + '</a></td><td>';
-		var userName = getUserName(value.userId);
-		html += userName + '</td></tr>';
+		html += '<tr><td><a href="topic/showTopicDetails/' + value.topicId + '">' 
+			 + value.topicTitle + '</a></td><td>' + value.userName + '</td></tr>';
 	});
 	$("tbody").append(html);
-}
-
-function getUserName(userId) {
-	var url = '/user/getUserName/' + userId;
-	var userName = '';
-	$.ajax({
-        type: 'GET',
-        dataType:'json',
-        url: contextPath + url,
-        async: false,
-//        contentType : 'application/json;charset=utf-8',
-        success : function(data) {
-        	userName = data.userName;
-        },
-        complete : function(XMLHttpRequest, textStatus) {
-        },
-        error : function(data) {
-        	layer.msg('请求错误', 1, 2);
-        }
-    });
-	return userName;
 }
 
 //单机触发版块的背景颜色变化
@@ -124,7 +101,6 @@ function changeBoardColor(key, boardId){
 	//根据所选的版块，对展示的主题帖进行更改
 	listBoardTopic(boardId);
 }
-
 
 //检查提交的主题帖子信息是否正确
 function checkTopicInfo(){

@@ -23,14 +23,14 @@
 	<link href="<%=contextPath %>/my/my.css" rel="stylesheet">
 
     <!-- Bootstrap core CSS -->
-    <link href="<%=contextPath %>/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<%=contextPath %>/css/bootstrap/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="<%=contextPath %>/css/dashboard.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="<%=contextPath %>/assets/js/ie-emulation-modes-warning.js"></script>
+    <%-- <script src="<%=contextPath %>/assets/js/ie-emulation-modes-warning.js"></script> --%>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -47,25 +47,25 @@
       <div class="row">
         <div class="col-sm-12 col-md-12 main">
           <div class="table-responsive">
-          <h4 class="topicTitle">${topic.topicTitle }</h4>
+          <h4 class="topicTitle">${topicView.topicTitle }</h4>
             <table class="table table-striped table-bordered">
               <tbody>
               	<tr>
               		<td class="col-sm-2" align="center">
               			<div>
-              				<img alt="" src="${topic.user.pictureUrl }" width="150" height="150">
+              				<img alt="" src="${topicView.pictureUrl }" width="150" height="150">
               			</div>
               			<div>
-              				${topic.user.userName }
+              				${topicView.userName }
               			</div>
               		</td>
               		<td class="col-sm-10">
               			<div><span class="right">
 								<a href="javascript:void(0);">楼主</a>
 							</span>
-							<span class="left"> 发表于： ${topic.createTime } </span></div>
+							<span class="left"> 发表于： ${topicView.createTime } </span></div>
 						<hr>
-              			<div class="topic_body">${topic.topicContent }</div>
+              			<div class="topic_body">${topicView.topicContent }</div>
               		</td>
               	</tr>
               </tbody>
@@ -78,12 +78,12 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="<%=contextPath %>/js/jquery.min.js"></script>
-    <script src="<%=contextPath %>/js/bootstrap.min.js"></script>
+    <script src="<%=contextPath %>/js/jquery/jquery.min.js"></script>
+    <script src="<%=contextPath %>/js/bootstrap/bootstrap.min.js"></script>
     <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
-    <script src="<%=contextPath %>/assets/js/vendor/holder.min.js"></script>
+    <%-- <script src="<%=contextPath %>/assets/js/vendor/holder.min.js"></script> --%>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="<%=contextPath %>/assets/js/ie10-viewport-bug-workaround.js"></script>
+    <%-- <script src="<%=contextPath %>/assets/js/ie10-viewport-bug-workaround.js"></script> --%>
     <!-- 引入layer -->
     <script src="<%=contextPath %>/layer/layer.js"></script>
     
