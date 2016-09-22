@@ -77,7 +77,13 @@ public class UserController {
         }
 
         // 将图片得相对路径存储到用户表中
-        savePictureUrl(userId, request.getContextPath() + "/images/userPhoto/" + fileName);
+        String userPicUrl = request.getContextPath() + "/images/userPhoto/" + fileName;
+        savePictureUrl(userId, userPicUrl);
+        
+        // 更新session中用户头像信息
+        User user = (User) request.getSession().getAttribute("LOGINUSER");
+        user.setPictureUrl(userPicUrl);
+        request.getSession().setAttribute("LOGINUSER", user);
 
         return "redirect:/";
     }

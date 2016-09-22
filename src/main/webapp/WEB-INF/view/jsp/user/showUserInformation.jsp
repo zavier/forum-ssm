@@ -43,7 +43,7 @@
 
 	<jsp:include page="../commonNavigationBar.jsp"></jsp:include>
 
-	<div class="container-fluid">
+	<div class="container">
 		<div class="row">
 			<div class="col-sm-12 col-md-12 main">
 				<div class="table-responsive">
@@ -52,15 +52,17 @@
 							class="form-control" id="userName" value="${LOGINUSER.userName}"
 							disabled>
 					</div>
-					<label for="photo" class="sr-only">头像</label> <img id="photo"
-						alt="无图片信息" src="${LOGINUSER.pictureUrl }" width="150"
-						height="150">
+					<label for="photo">头像</label>
+					<div> 
+						<img id="photo" alt="无图片信息" src="${LOGINUSER.pictureUrl }" width="150" height="150">
+					</div>
+					<br/>
 					<form action="<%=contextPath %>/user/uploadPicture/${LOGINUSER.id }" enctype="multipart/form-data" method="post">
 						<div class="form-group">
-							<label for="changePhoto" class="">更换头像(上传成功后需退出再登录)</label> <input type="file"
-								id="changePhoto" name="file">
+							<label for="changePhoto" class="sr-only">更换头像</label>
+							<input type="file" id="changePhoto" name="file">
 						</div>
-						<button type="submit" class="btn btn-primary">提交</button>
+						<button type="submit" class="btn btn-primary">更换头像</button>
 					</form>
 				</div>
 			</div>
@@ -77,10 +79,29 @@
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 	<%-- <script
 		src="<%=contextPath %>/assets/js/ie10-viewport-bug-workaround.js"></script> --%>
-	<!-- 引入layer -->
-	<script src="<%=contextPath %>/layer/layer.js"></script>
 
 	<script src="<%=contextPath %>/my/my.js"></script>
+
+	<!-- 选择图片后立即显示相关js -->
+	<script type="text/javascript">
+		$("#changePhoto").change(function(e){
+			if(typeof FileReader == "undefied"){
+		        alert("浏览器版本过低");
+		    }
+	        var file = e.target.files[0];
+	         if(file){
+	             var reader = new FileReader();
+	             reader.readAsDataURL(file);
+	             reader.onload=function(){
+	                 var urlData = this.result;
+	                 $("#photo").attr("src",urlData);
+	             }
+	        } else {
+	            $("#photo").attr("src", "${LOGINUSER.pictureUrl}");
+	        }
+	    });
+    
+	</script>
 
 </body>
 </html>
