@@ -46,13 +46,14 @@
 					<h4 class="modal-title" id="myModalLabel">新建版块</h4>
 				</div>
 				<div class="modal-body">
-					<form>
-						<div class="form-group">
-							<label for="boardName" class="sr-only">boardName</label> <input
-								type="text" class="form-control" id="addboardName" name="boardName"
-								placeholder="版块名称" />
+					<form id="addBoardForm" role="form" action="#">
+						<div class="form-group has-feedback">
+							<label for="boardName" class="sr-only">boardName</label> 
+							<input type="text" class="form-control" id="addboardName" name="boardName"
+								placeholder="版块名称" data-error="板块名称不能为空" required autofocus/>
+							<div class="help-block with-errors"></div>
 						</div>
-						<div class="form-group">
+						<div class="form-group has-feedback">
 							<label for="boardDesc" class="sr-only">boardDesc</label>
 							<textarea rows="5" class="form-control" id="addboardDesc"
 								name="boardDesc" placeholder="版块描述"></textarea>
@@ -60,8 +61,7 @@
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary"
-						onclick="addBoardInfo();">提交</button>
+					<button type="submit" form="addBoardForm" class="btn btn-primary">提交</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 				</div>
 			</div>
@@ -80,16 +80,17 @@
 					<h4 class="modal-title" id="myModalLabel">修改版块</h4>
 				</div>
 				<div class="modal-body">
-					<form>
+					<form id="updateBoardForm" role="form" action="#">
 						<div class="form-group sr-only">
 							<label for="boardId" class="sr-only">boardId</label> <input
 								type="text" class="form-control" id="boardId" name="id" />
 						</div>
-						<div class="form-group">
-							<label for="boardName" class="sr-only">boardName</label> <input
-								type="text" class="form-control" id="updateboardName" name="boardName" />
+						<div class="form-group has-feedback">
+							<label for="boardName" class="sr-only">boardName</label> 
+							<input type="text" class="form-control" data-error="板块名称不能为空" id="updateboardName" name="boardName" required/>
+							<div class="help-block with-errors"></div>
 						</div>
-						<div class="form-group">
+						<div class="form-group has-feedback">
 							<label for="boardDesc" class="sr-only">boardDesc</label>
 							<textarea rows="5" class="form-control" id="updateboardDesc"
 								name="boardDesc"></textarea>
@@ -97,8 +98,7 @@
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button id="submit_button" class="btn btn-primary" type="button"
-						onclick="updateBoardInfo();">更改板块信息</button>
+					<button id="submit_button" class="btn btn-primary" type="submit" form="updateBoardForm">更改板块信息</button>
 					<button id="delete_button" class="btn btn-default" type="button"
 						onclick="deleteBoard();">删除板块</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -157,7 +157,30 @@
     <%-- <script src="<%=contextPath %>/assets/js/vendor/holder.min.js"></script> --%>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <%-- <script src="<%=contextPath %>/assets/js/ie10-viewport-bug-workaround.js"></script> --%>
-    
+    <script src="<%=contextPath%>/js/bootstrap/validator.js"></script>
     <script src="<%=contextPath %>/my/my.js"></script>
+    <script type="text/javascript">
+		$(function(){
+    		// 检查板块信息是否符合要求
+            $('#addBoardForm').validator().on('submit', function (e) {
+            	if (e.isDefaultPrevented()) { // 校验未通过
+                	
+                } else { // 校验通过
+                	// 添加板块
+					addBoardInfo();
+                	return false;
+              }
+            })
+            $('#updateBoardForm').validator().on('submit', function (e) {
+            	if (e.isDefaultPrevented()) { // 校验未通过
+                	
+                } else { // 校验通过
+                	// 更新板块信息
+                	updateBoardInfo();
+                	return false;
+              }
+            })
+    	})
+    </script>
   </body>
 </html>

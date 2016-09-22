@@ -40,22 +40,27 @@
 
     <div class="container">
 
-      <form class="form-signin" action="<%=request.getContextPath() %>/user/login/doLogin" method="post" >
+      <form data-toggle="validator" role="form" class="form-signin" action="<%=request.getContextPath() %>/user/login/doLogin" method="post" >
         <h2 class="form-signin-heading col-md-4 col-md-offset-4">登录</h2>
-        <label for="inputUserName" class="sr-only">userName</label>
-        <input type="text" id="inputUserName" name="userName" class="form-control" placeholder="用户名(大于6位)" required autofocus>
-        <c:if test="${!empty errorMsg }">
-			<div style="color:red">${errorMsg }</div>
-		</c:if>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="密码(大于6位)" required>
+        <div class="form-group has-feedback">
+	        <label for="inputUserName" class="sr-only">userName</label>
+	        <input type="text" id="inputUserName" name="userName" class="form-control" data-minlength="6" maxlength="12" placeholder="用户名(大于6位)" data-error="用户名必须为6~12位" required autofocus>
+	        <div class="help-block with-errors"></div>
+        </div>
+		<div class="form-group has-feedback">
+	        <label for="inputPassword" class="sr-only">Password</label>
+	        <input type="password" id="inputPassword" name="password" class="form-control" data-minlength="6" placeholder="密码(大于6位)" data-error="密码必须不小于6位" required>
+	        <div class="help-block with-errors"></div>
+	    </div>
         <div class="checkbox">
         </div>
-        <button id="submit_button" class="btn btn-lg btn-primary btn-block" type="submit" onclick="return checkRegisterInfo();">登录</button>
+        <button id="submit_button" class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
       </form>
     </div> <!-- /container -->
 
 	<script src="<%=contextPath %>/js/jquery/jquery.min.js"></script>
+	<script src="<%=contextPath %>/js/bootstrap/bootstrap.min.js"></script>
+	<script src="<%=contextPath%>/js/bootstrap/validator.js"></script>
 	<script src="<%=contextPath %>/my/my.js"></script>
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->

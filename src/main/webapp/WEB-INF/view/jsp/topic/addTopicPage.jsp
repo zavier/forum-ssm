@@ -40,23 +40,26 @@
 
     <div class="container">
 
-      <form action="<%=contextPath %>/topic/addTopic/${boardId}" method="post" >
+      <form action="<%=contextPath %>/topic/addTopic/${boardId}" method="post" data-toggle="validator" role="form">
         <h2 class="form-signin-heading col-md-4 col-md-offset-5">发帖</h2>
-        <div class="form-group">
+        <div class="form-group has-feedback">
 		    <label for="topicTitle" class="sr-only">topicTitle</label>
-		    <input type="text" class="form-control" id="topicTitle" name="topicTitle" placeholder="在此输入标题"></input>
+		    <input type="text" class="form-control" id="topicTitle" name="topicTitle" placeholder="在此输入标题" data-error="标题不能为空"  required></input>
+		    <div class="help-block with-errors"></div>
 		</div>
-        <div class="form-group">
+        <div class="form-group has-feedback">
 		    <label for="topicContent" class="sr-only">topicContent</label>
-		    <textarea rows="10" class="form-control" id="topicContent" name="topicContent" placeholder="在此输入正文内容"></textarea>
+		    <textarea rows="10" class="form-control" id="topicContent" name="topicContent" placeholder="在此输入正文内容" data-error="内容不能为空"  required></textarea>
+		    <div class="help-block with-errors"></div>
 		</div>
-        <button id="submit_button" class="btn btn-lg btn-primary btn-block" type="submit" onclick="return checkTopicInfo();">提交</button>
+        <button id="submit_button" class="btn btn-lg btn-primary btn-block" type="submit">提交</button>
       </form>
     </div> <!-- /container -->
 
 	<script src="<%=contextPath %>/js/jquery/jquery.min.js"></script>
+	<script src="<%=contextPath %>/js/bootstrap/bootstrap.min.js"></script>
+	<script src="<%=contextPath%>/js/bootstrap/validator.js"></script>
 	<script src="<%=contextPath %>/my/my.js"></script>
-	<script src="<%=contextPath %>/layer/layer.js"></script>
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <%-- <script src="<%=contextPath %>/assets/js/ie10-viewport-bug-workaround.js"></script> --%>

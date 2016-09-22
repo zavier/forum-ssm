@@ -2,21 +2,6 @@ function waiting(){
 	alert("请等待后续完善...");
 }
 
-function checkRegisterInfo(){
-	var username = $("#inputUserName").val();
-	var trim_username = $.trim(username);
-	var password = $("#inputPassword").val();
-	if(trim_username.length < 6 || trim_username.length > 8){
-		alert("账号应6~8位!");
-		return false;
-	}
-	if(password.length < 6 || password.length > 12){
-		alert("密码应6~12位!");
-		return false;
-	}
-	return true;
-}
-
 function checkIfLogined(){
 	var loginButtonText = $("#loginLink").text();
 	if(loginButtonText != '登录'){					//已经登录
@@ -137,25 +122,6 @@ function changeBoardColor(key, boardId){
 	listBoardTopic(boardId);
 }
 
-//检查提交的主题帖子信息是否正确
-function checkTopicInfo(){
-	var topicTitle = $("#topicTitle").val();
-	var topicTitle_trim = $.trim(topicTitle);
-	var topicContent = $("#topicContent").val();
-	var topicContent_trim = $.trim(topicContent);
-	
-	var topicTitleLen = topicTitle_trim.length;
-	if(topicTitleLen > 20){
-		alert("标题不能为空,且应小于20个字");
-		return false;
-	}
-	if(topicContent_trim == ''){
-		alert("正文内容不能为空");
-		return false;
-	}
-	return true;
-}
-
 //检查提交的版块信息是否正确
 function checkBoardInfo(){
 //	var boardName = $("#boardName").val();
@@ -204,9 +170,6 @@ function updateBoardInfo(){
 
 //新增板块信息
 function addBoardInfo(){
-	if(!checkBoardInfo()){	//检查板块信息是否符合要求
-		return false;
-	}
 	var boardName = $("#addboardName").val();
 	var boardDesc = $("#addboardDesc").val();
 	var url = '/board/addOrUpdateBoard';
