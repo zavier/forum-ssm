@@ -35,7 +35,80 @@
 
     <jsp:include page="commonNavigationBar.jsp"></jsp:include>
 
-    <div class="container-fluid">
+	<!-- 新建板块modal 开始-->
+	<div class="modal fade" id="addBoardModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">新建版块</h4>
+				</div>
+				<div class="modal-body">
+					<form>
+						<div class="form-group">
+							<label for="boardName" class="sr-only">boardName</label> <input
+								type="text" class="form-control" id="addboardName" name="boardName"
+								placeholder="版块名称" />
+						</div>
+						<div class="form-group">
+							<label for="boardDesc" class="sr-only">boardDesc</label>
+							<textarea rows="5" class="form-control" id="addboardDesc"
+								name="boardDesc" placeholder="版块描述"></textarea>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary"
+						onclick="addBoardInfo();">提交</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 新建板块modal 结束-->
+	
+	<!-- 修改板块modal 开始 -->
+	<div class="modal fade" id="updateBoardModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">修改版块</h4>
+				</div>
+				<div class="modal-body">
+					<form>
+						<div class="form-group sr-only">
+							<label for="boardId" class="sr-only">boardId</label> <input
+								type="text" class="form-control" id="boardId" name="id" />
+						</div>
+						<div class="form-group">
+							<label for="boardName" class="sr-only">boardName</label> <input
+								type="text" class="form-control" id="updateboardName" name="boardName" />
+						</div>
+						<div class="form-group">
+							<label for="boardDesc" class="sr-only">boardDesc</label>
+							<textarea rows="5" class="form-control" id="updateboardDesc"
+								name="boardDesc"></textarea>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button id="submit_button" class="btn btn-primary" type="button"
+						onclick="updateBoardInfo();">更改板块信息</button>
+					<button id="delete_button" class="btn btn-default" type="button"
+						onclick="deleteBoard();">删除板块</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 修改板块modal 结束 -->
+
+	<div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar" id="boardList">
@@ -46,8 +119,8 @@
 		  <br />
 		  <div class="text-right">
 		  <shiro:authenticated>
-		  	<a href="javascript:void(0);" id="addBoardPage" onclick="addBoardPage();"  class="btn btn-primary">新建版块</a>
-		  	<a href="javascript:void(0);" id="updateBoardPage" class="btn btn-primary">管理版块</a>
+		  	<button class="btn btn-primary" data-toggle="modal" data-target="#addBoardModal">新建版块</button>
+		  	<button class="btn btn-primary" id="updateBoardPage" data-toggle="modal" data-target="#updateBoardModal">管理版块</button>
           	<a href="<%=contextPath %>/board/addTopicPage" id="posting" class="btn btn-primary">发表主题帖</a>
 		  </shiro:authenticated>
 		  </div>
@@ -84,8 +157,6 @@
     <%-- <script src="<%=contextPath %>/assets/js/vendor/holder.min.js"></script> --%>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <%-- <script src="<%=contextPath %>/assets/js/ie10-viewport-bug-workaround.js"></script> --%>
-    <!-- 引入layer -->
-    <script src="<%=contextPath %>/layer/layer.js"></script>
     
     <script src="<%=contextPath %>/my/my.js"></script>
   </body>

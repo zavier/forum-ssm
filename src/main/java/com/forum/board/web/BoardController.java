@@ -1,5 +1,6 @@
 package com.forum.board.web;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -54,20 +55,20 @@ public class BoardController {
     @RequestMapping(value = "/addOrUpdateBoard", method = RequestMethod.POST,
             produces = "application/json")
     @ResponseBody
-    public ResultSet addBoard(Board board) {
+    public ResultSet<String> addBoard(Board board) {
         log.info("addOrUpdateBoard is : " + board);
         boolean res;
-        ResultSet result = new ResultSet();
+        ResultSet<String> result = new ResultSet<String>();
 
         res = boardService.ifExistBoardName(board);
         if (res) { // 不论添加或修改，首先判断是否存在同名版块
-            result.setStateCode(1);
+            result.setStateCode(ResultSet.RES_FAIL);
             log.info("存在同名板块");
             result.setMessage("已存在同名板块");
             return result;
         }
 
-        result.setStateCode(0);
+        result.setStateCode(ResultSet.RES_SUCCESS);
         if (board.getId() == null) { // 进行新增板块
             boardService.addBoard(board);
             log.info("版块添加成功");
@@ -87,12 +88,12 @@ public class BoardController {
     @RequestMapping(value = "/deleteBoard", method = RequestMethod.GET,
             produces = "application/json")
     @ResponseBody
-    public ResultSet deleteBoard(String boardId) {
+    public ResultSet<String> deleteBoard(String boardId) {
         log.info("删除板块的 id  : " + boardId);
-        ResultSet result = new ResultSet();
+        ResultSet<String> result = new ResultSet<>();
         boardService.deleteBoard(boardId);
         log.info("板块删除成功");
-        result.setStateCode(0);
+        result.setStateCode(ResultSet.RES_SUCCESS);
         result.setMessage("删除板块成功");
         return result;
     }
@@ -110,6 +111,21 @@ public class BoardController {
         view.addObject("board", board);
         view.setViewName("/board/updateBoardPage");
         return view;
+    }
+    
+    @RequestMapping(value = "/getBoardInfo", method = RequestMethod.GET)
+    @ResponseBody
+    public ResultSet<Board> findBoardInfo(String boardId) {
+        Board board = boardService.getBoardById(boardId);
+        ResultSet<Board> resultSet = new ResultSet<Board>();
+        if (board != null) {
+            resultSet.setStateCode(ResultSet.RES_SUCCESS);
+            resultSet.setResult(new ArrayList<Board>(){{add(board);}});
+        } else {
+            resultSet.setStateCode(ResultSet.RES_FAIL);
+            resultSet.setMessage("获取板块信息失败");
+        }
+        return resultSet;
     }
 
 }

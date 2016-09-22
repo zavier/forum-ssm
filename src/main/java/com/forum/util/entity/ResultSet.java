@@ -1,18 +1,33 @@
 package com.forum.util.entity;
 
-public class ResultSet {
+import java.util.List;
 
-	//状态码  0：正确		1：错误
-	private int stateCode;
+public class ResultSet<T> {
+
+    /**
+     * 处理结果成功
+     */
+    public static final String RES_SUCCESS = "success";
+    
+    /**
+     * 处理结果失败
+     */
+    public static final String RES_FAIL = "fail";
+    
+	//处理结果状态码
+	private String stateCode;
 	
-	//错误信息
+	//结果信息
 	private String message;
+	
+	//结果数据
+	private List<T> result;
 
-	public int getStateCode() {
+	public String getStateCode() {
 		return stateCode;
 	}
 
-	public void setStateCode(int stateCode) {
+	public void setStateCode(String stateCode) {
 		this.stateCode = stateCode;
 	}
 
@@ -23,5 +38,13 @@ public class ResultSet {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+
+    public List<T> getResult() {
+        return result;
+    }
+
+    public void setResult(List<T> result) {
+        this.result = result;
+    }
 	
 }

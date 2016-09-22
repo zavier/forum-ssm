@@ -1,5 +1,5 @@
 function waiting(){
-	layer.msg("请等待后续完善...");
+	alert("请等待后续完善...");
 }
 
 function checkRegisterInfo(){
@@ -7,11 +7,11 @@ function checkRegisterInfo(){
 	var trim_username = $.trim(username);
 	var password = $("#inputPassword").val();
 	if(trim_username.length < 6 || trim_username.length > 8){
-		layer.msg("账号应6~8位!");
+		alert("账号应6~8位!");
 		return false;
 	}
 	if(password.length < 6 || password.length > 12){
-		layer.msg("密码应6~12位!");
+		alert("密码应6~12位!");
 		return false;
 	}
 	return true;
@@ -158,35 +158,29 @@ function checkTopicInfo(){
 
 //检查提交的版块信息是否正确
 function checkBoardInfo(){
-	var boardName = $("#boardName").val();
-	var boardDesc = $("#boardDesc").val();
-	var boardName_trim = $.trim(boardName);
-	var boardDesc_trim = $.trim(boardDesc);
-	if(boardName_trim.length > 10 || boardName_trim == ""){
-		alert("名称应在1~10个字之间");
-		return false;
-	}
+//	var boardName = $("#boardName").val();
+//	var boardDesc = $("#boardDesc").val();
+//	var boardName_trim = $.trim(boardName);
+//	var boardDesc_trim = $.trim(boardDesc);
+//	if(boardName_trim.length > 10 || boardName_trim == ""){
+//		alert("名称应在1~10个字之间");
+//		return false;
+//	}
 	return true;
 }
 
-//管理板块页面
+//修改板块，查询并显示板块信息
 function updateBoardPage(boardId){
-	layer.open({
-		title : '管理板块',
-		type : 2,
-		content : 'board/updateBoardPage/' + boardId,
-		area : ['600px', '335px'],
-	});
+	var url = '/board/getBoardInfo';
+	var params = {boardId:boardId};
+	commonAjax(url, params, 'get', showBoardInfo);
 }
 
-//新增板块页面
-function addBoardPage(){
-	layer.open({
-		title : '新建板块',
-		type : 2,
-		content : 'board/addBoardPage',
-		area : ['600px', '335px'],
-	});
+//更新板块时，将板块信息显示在更新板块modal
+function showBoardInfo(data){
+	$("#boardId").val(data.result[0].id);
+	$("#updateboardName").val(data.result[0].boardName);
+	$("#updateboardDesc").val(data.result[0].boardDesc);
 }
 
 //更新板块信息
@@ -195,8 +189,8 @@ function updateBoardInfo(){
 		return false;
 	}
 	var boardId = $("#boardId").val();
-	var boardName = $("#boardName").val();
-	var boardDesc = $("#boardDesc").val();
+	var boardName = $("#updateboardName").val();
+	var boardDesc = $("#updateboardDesc").val();
 	var url = '/board/addOrUpdateBoard';
 	var params = new Object();
 	params.id = boardId;
@@ -204,6 +198,8 @@ function updateBoardInfo(){
 	params.boardDesc = boardDesc;
 	
 	commonAjax(url, params, 'POST', showResult);
+	// 关闭修改板块模态框
+	$("#updateBoardModal").modal('hide');
 }
 
 //新增板块信息
@@ -211,47 +207,46 @@ function addBoardInfo(){
 	if(!checkBoardInfo()){	//检查板块信息是否符合要求
 		return false;
 	}
-	var boardName = $("#boardName").val();
-	var boardDesc = $("#boardDesc").val();
+	var boardName = $("#addboardName").val();
+	var boardDesc = $("#addboardDesc").val();
 	var url = '/board/addOrUpdateBoard';
 	var params = new Object();
 	params.boardName = boardName;
 	params.boardDesc = boardDesc;
 	
 	commonAjax(url, params, 'POST', showResult);
+	// 关闭添加板块模态框
+	$("#addBoardModal").modal('hide');
+	// 清空添加模态框中的内容
+	clearAddBoardModal();
+}
+
+// 清空添加模态框中的内容
+function clearAddBoardModal(){
+	$("#addboardName").val("");
+	$("#addboardDesc").val("");
 }
 
 //进行添加修改板块后的后续处理
 function showResult(data){
 	var message = data['message'];
-	layer.msg(message);
-	window.setTimeout(function() {
-		closeLayer();
-	}, 500);
-	
+	alert(message);
 	parent.initSearchBoardAndTopic();
 }
 
-function closeLayer(){
-	//当你在iframe页面关闭自身时
-	var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-	parent.layer.close(index); //再执行关闭 
-}
-
 //删除板块
-function deleteBoard(boardId){
-	layer.confirm('删除板块后导致其下的帖子全被删除，确定？', {
-	    btn: ['确定','取消'] //按钮
-	}, function(){
+function deleteBoard(){
+	var boardId = $("#boardId").val();
+	var res = confirm('删除板块后导致其下的帖子全被删除，确定？');
+	if (res) {
 		//进行删除操作
 		var url = '/board/deleteBoard';
 		var params = new Object();
 		params.boardId = boardId;
 		commonAjax(url, params, 'GET', showResult);
-		
-	}, function(){
-	    
-	});
+	}
+	// 关闭修改板块模态框
+	$("#updateBoardModal").modal('hide');
 }
 
 function commonAjax(url,params,reqType,fun){
@@ -268,7 +263,7 @@ function commonAjax(url,params,reqType,fun){
         complete : function(XMLHttpRequest, textStatus) {
         },
         error : function(data) {
-        	layer.msg('请求错误', 1, 2);
+        	alert('请求错误');
         }
     });
 }
