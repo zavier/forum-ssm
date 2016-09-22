@@ -23,8 +23,6 @@ import com.forum.util.MD5Util;
 /**
  * 用户登录、注销的控制器
  * 
- * @author zhangbin-neu
- *
  */
 @Controller
 @RequestMapping(value = "/user")

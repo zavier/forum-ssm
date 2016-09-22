@@ -1,10 +1,13 @@
 package com.forum.topic.web;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,11 +16,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.forum.entity.Post;
 import com.forum.entity.Topic;
 import com.forum.entity.User;
+import com.forum.post.service.PostService;
 import com.forum.topic.service.TopicService;
 import com.forum.user.service.UserService;
 import com.forum.util.UUIDUtil;
+import com.forum.util.entity.PostView;
 import com.forum.util.entity.TopicView;
 
 /*
@@ -27,9 +33,14 @@ import com.forum.util.entity.TopicView;
 @RequestMapping(value = "/topic")
 public class TopicController {
 
+    private static final Logger log = LoggerFactory.getLogger(TopicController.class);
+    
     @Autowired
     private TopicService topicService;
 
+    @Autowired
+    private PostService postService;
+    
     @Autowired
     private UserService userService;
 
@@ -93,8 +104,23 @@ public class TopicController {
     public ModelAndView showTopicDetails(@PathVariable String topicId) {
         ModelAndView view = new ModelAndView();
         view.setViewName("/topic/showTopicDetails");
+        // 获取主题帖相关信息
         TopicView topicView = topicService.getTopicViewByTopicId(topicId);
+        // 获取主题帖下面的所有评论
+        List<Post> postList = postService.getPostsByTopicId(topicId);
+        List<PostView> postViewList = new ArrayList<>();
+        for (Post post : postList) {
+            PostView postView = new PostView();
+            postView.setPost(post);
+            String userId = post.getUserId();
+            User user = userService.findById(userId);
+            postView.setUser(user);
+            postViewList.add(postView);
+        }
+        
+        log.info("topicview : " + topicView);
         view.addObject("topicView", topicView);
+        view.addObject("postViewList", postViewList);
         return view;
     }
 }

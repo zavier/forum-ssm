@@ -92,19 +92,19 @@ function listBoardTopic(boardId){
 		strictSearch: true,
 		clickToSelect: true, //是否启用点击选中行
 //		height: 460, //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
-		uniqueId: 'topicId', //每一行的唯一标识，一般为主键列
+		uniqueId: 'topic.id', //每一行的唯一标识，一般为主键列
 		cardView: false, //是否显示详细视图
 		detailView: false, //是否显示父子表
 		columns: [{
-			field: 'topicId',
+			field: 'topic.id',
 			title: '序号',
 			formatter: indexFormatter
 		},{
-			field: 'topicTitle',
+			field: 'topic.topicTitle',
 			title: '标题',
 			formatter: topicTitleFormatter
 		},{
-			field: 'userName',
+			field: 'user.userName',
 			title: '发帖人',
 		},]
 	});
@@ -118,8 +118,8 @@ var indexFormatter = function(value, row, index) {
 
 // 显示主题帖标题列
 var topicTitleFormatter = function(value, row, index) {
-	return '<a href="topic/showTopicDetails/' + row.topicId + '">' 
-			 + row.topicTitle + '</a>';
+	return '<a href="topic/showTopicDetails/' + row.topic.id + '">' 
+			 + row.topic.topicTitle + '</a>';
 }
 
 //单机触发版块的背景颜色变化
@@ -266,4 +266,27 @@ function commonAjax(url,params,reqType,fun){
         	alert('请求错误');
         }
     });
+}
+
+
+/**
+ * 提交评论
+ * @param topicId 评论的主题帖id
+ * @param boardId 所在板块id
+ * @param userId 进行评论的用户id
+ */
+function submitReply(topicId, boardId, userId) {
+	var text = $("#reply").val();
+	var url ="/post/addPost";
+	var params = new Object();
+	params.text = text;
+	params.topicId = topicId;
+	params.boardId = boardId;
+	params.userId = userId;
+	commonAjax(url, params, 'post', afterSubmitReply);
+}
+
+function afterSubmitReply(data){
+	alert("评论成功");
+	location.reload();
 }

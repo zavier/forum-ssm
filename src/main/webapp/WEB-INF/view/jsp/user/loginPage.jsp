@@ -57,7 +57,6 @@
 
 	<script src="<%=contextPath %>/js/jquery/jquery.min.js"></script>
 	<script src="<%=contextPath %>/my/my.js"></script>
-	<script src="<%=contextPath %>/layer/layer.js"></script>
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <%-- <script src="<%=contextPath %>/assets/js/ie10-viewport-bug-workaround.js"></script> --%>

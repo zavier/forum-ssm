@@ -3,6 +3,8 @@ package com.forum.topic.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +20,8 @@ import com.forum.util.entity.TopicView;
 @Service
 public class TopicService {
 
+    private static final Logger log = LoggerFactory.getLogger(TopicService.class);
+    
     @Autowired
     private BoardMapper boardMapper;
 
@@ -77,10 +81,8 @@ public class TopicService {
             User user = userService.findById(userId);
 
             TopicView topicView = new TopicView();
-            topicView.setTopicId(topic.getId());
-            topicView.setTopicTitle(topic.getTopicTitle());
-            topicView.setUserName(user.getUserName());
-            topicView.setPictureUrl(user.getPictureUrl());
+            topicView.setTopic(topic);
+            topicView.setUser(user);
             topicViewList.add(topicView);
         }
         return topicViewList;
@@ -94,16 +96,14 @@ public class TopicService {
      */
     public TopicView getTopicViewByTopicId(String topicId) {
         Topic topic = getTopicById(topicId);
+        log.info("查找到的主题帖为：" + topic);
         String userId = topic.getUserId();
         User user = userService.findById(userId);
+        log.info("通过主题帖查找到的用户为：" + user);
 
         TopicView topicView = new TopicView();
-        topicView.setTopicId(topic.getId());
-        topicView.setTopicTitle(topic.getTopicTitle());
-        topicView.setUserName(user.getUserName());
-        topicView.setPictureUrl(user.getPictureUrl());
-        topicView.setCreateTime(topic.getCreateTime());
-        topicView.setTopicContent(topic.getTopicContent());
+        topicView.setTopic(topic);
+        topicView.setUser(user);
 
         return topicView;
     }

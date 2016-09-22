@@ -1,5 +1,6 @@
 package com.forum.post.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.forum.dao.PostMapper;
 import com.forum.entity.Post;
+import com.forum.util.UUIDUtil;
 
 @Service
 public class PostService {
@@ -22,8 +24,16 @@ public class PostService {
      * @return
      */
     @Transactional(readOnly = true)
-    public List<Post> getPagedPosts(String topicId) {
+    public List<Post> getPostsByTopicId(String topicId) {
 
         return postMapper.selectByTopicId(topicId);
+    }
+
+    @Transactional
+    public void addPost(Post post) {
+        String primaryKey = UUIDUtil.getUUIDPrimaryKey();
+        post.setId(primaryKey);
+        post.setCreateTime(new Date());
+        postMapper.insertSelective(post);
     }
 }
