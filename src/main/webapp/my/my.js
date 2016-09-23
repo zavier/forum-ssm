@@ -239,7 +239,7 @@ function commonAjax(url,params,reqType,fun){
  * @param userId 进行评论的用户id
  */
 function submitReply(topicId, boardId, userId) {
-	var text = $("#reply").val();
+	var text = UE.getEditor('replyContainer').getContent();
 	var url ="/post/addPost";
 	var params = new Object();
 	params.text = text;

@@ -29,15 +29,14 @@
     <!-- Custom styles for this template -->
     <link href="<%=contextPath %>/css/dashboard.css" rel="stylesheet">
 
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <%-- <script src="<%=contextPath %>/assets/js/ie-emulation-modes-warning.js"></script> --%>
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+	<!-- UEditor -->
+    <!-- 配置文件 -->
+    <script type="text/javascript" charset="utf-8" src="<%=contextPath %>/ueditor/ueditor.config.js"></script>
+    <!-- 编辑器源码文件 -->
+    <script type="text/javascript" charset="utf-8" src="<%=contextPath %>/ueditor/ueditor.all.js"> </script>
+    <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+    <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+    <script type="text/javascript" charset="utf-8" src="<%=contextPath %>/ueditor/lang/zh-cn/zh-cn.js"></script>
     
     <style type="text/css">
         #replyDiv{
@@ -114,7 +113,8 @@
 		<div class="row" id="replyDiv">
 			<div class="col-md-offset-3 col-md-6">
 				<h4>评论内容：</h4>
-				<textarea id="reply"></textarea>
+				<!-- 加载编辑器的内容 -->
+		        <script id="replyContainer" name="content" type="text/plain"></script>
 				<br />
 				<shiro:authenticated>
 					<button type="button" class="btn btn-primary" onclick="submitReply('${topicView.topic.id}', '${topicView.topic.boardId }', '${LOGINUSER.id}')">提交评论</button>
@@ -138,6 +138,11 @@
     <%-- <script src="<%=contextPath %>/assets/js/ie10-viewport-bug-workaround.js"></script> --%>
     
     <script src="<%=contextPath %>/my/my.js"></script>
+    
+    <!-- 实例化编辑器 -->
+    <script type="text/javascript">
+        var ue = UE.getEditor('replyContainer');
+    </script>
     
   </body>
 </html>
