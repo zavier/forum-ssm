@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.forum.board.service.BoardService;
 import com.forum.entity.Board;
-import com.forum.util.entity.ResultSet;
+import com.forum.util.entity.ResponseResult;
 
 /**
  * 论坛板块的控制器
@@ -55,20 +56,20 @@ public class BoardController {
     @RequestMapping(value = "/addOrUpdateBoard", method = RequestMethod.POST,
             produces = "application/json")
     @ResponseBody
-    public ResultSet<String> addBoard(Board board) {
+    public ResponseResult<String> addBoard(@Valid Board board) {
         log.info("addOrUpdateBoard is : " + board);
         boolean res;
-        ResultSet<String> result = new ResultSet<String>();
+        ResponseResult<String> result = new ResponseResult<String>();
 
         res = boardService.ifExistBoardName(board);
         if (res) { // 不论添加或修改，首先判断是否存在同名版块
-            result.setStateCode(ResultSet.RES_FAIL);
+            result.setStateCode(ResponseResult.RES_FAIL);
             log.info("存在同名板块");
             result.setMessage("已存在同名板块");
             return result;
         }
 
-        result.setStateCode(ResultSet.RES_SUCCESS);
+        result.setStateCode(ResponseResult.RES_SUCCESS);
         if (board.getId() == null) { // 进行新增板块
             boardService.addBoard(board);
             log.info("版块添加成功");
@@ -88,12 +89,12 @@ public class BoardController {
     @RequestMapping(value = "/deleteBoard", method = RequestMethod.GET,
             produces = "application/json")
     @ResponseBody
-    public ResultSet<String> deleteBoard(String boardId) {
+    public ResponseResult<String> deleteBoard(String boardId) {
         log.info("删除板块的 id  : " + boardId);
-        ResultSet<String> result = new ResultSet<>();
+        ResponseResult<String> result = new ResponseResult<>();
         boardService.deleteBoard(boardId);
         log.info("板块删除成功");
-        result.setStateCode(ResultSet.RES_SUCCESS);
+        result.setStateCode(ResponseResult.RES_SUCCESS);
         result.setMessage("删除板块成功");
         return result;
     }
@@ -115,17 +116,17 @@ public class BoardController {
     
     @RequestMapping(value = "/getBoardInfo", method = RequestMethod.GET)
     @ResponseBody
-    public ResultSet<Board> findBoardInfo(String boardId) {
+    public ResponseResult<Board> findBoardInfo(String boardId) {
         Board board = boardService.getBoardById(boardId);
-        ResultSet<Board> resultSet = new ResultSet<Board>();
+        ResponseResult<Board> result = new ResponseResult<Board>();
         if (board != null) {
-            resultSet.setStateCode(ResultSet.RES_SUCCESS);
-            resultSet.setResult(new ArrayList<Board>(){{add(board);}});
+            result.setStateCode(ResponseResult.RES_SUCCESS);
+            result.setResult(new ArrayList<Board>(){{add(board);}});
         } else {
-            resultSet.setStateCode(ResultSet.RES_FAIL);
-            resultSet.setMessage("获取板块信息失败");
+            result.setStateCode(ResponseResult.RES_FAIL);
+            result.setMessage("获取板块信息失败");
         }
-        return resultSet;
+        return result;
     }
 
 }

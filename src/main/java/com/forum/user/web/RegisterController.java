@@ -1,6 +1,7 @@
 package com.forum.user.web;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +47,7 @@ public class RegisterController {
      * @return
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ModelAndView register(HttpServletRequest request, User user) {
+    public ModelAndView register(HttpServletRequest request,@Valid User user) {
         ModelAndView view = new ModelAndView();
         switch (userService.register(user)) {
             case CORRECT_USER:

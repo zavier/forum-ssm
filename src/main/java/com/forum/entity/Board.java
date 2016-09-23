@@ -1,10 +1,13 @@
 package com.forum.entity;
 
+import javax.validation.constraints.NotNull;
+
 public class Board {
     private String id;
 
     private String boardDesc;
 
+    @NotNull
     private String boardName;
 
     private Integer topicNum;

@@ -1,5 +1,7 @@
 package com.forum.entity;
 
+import org.hibernate.validator.constraints.Length;
+
 public class User {
     private String id;
 
@@ -7,10 +9,12 @@ public class User {
 
     private Integer locked;
 
+    @Length(min=6)
     private String password;
 
     private String pictureUrl;
 
+    @Length(min=6, max=12)
     private String userName;
 
     private Integer userType;

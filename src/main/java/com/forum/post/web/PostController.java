@@ -14,7 +14,7 @@ import com.forum.entity.Post;
 import com.forum.entity.Topic;
 import com.forum.post.service.PostService;
 import com.forum.topic.service.TopicService;
-import com.forum.util.entity.ResultSet;
+import com.forum.util.entity.ResponseResult;
 
 @Controller
 @RequestMapping(value = "/post")
@@ -53,7 +53,7 @@ public class PostController {
      */
     @RequestMapping(value = "/addPost", method = RequestMethod.POST)
     @ResponseBody
-    public ResultSet<String> addPost(String text, String topicId, String boardId, String userId) {
+    public ResponseResult<String> addPost(String text, String topicId, String boardId, String userId) {
         Post post = new Post();
         post.setTopicId(topicId);
         post.setBoardId(boardId);
@@ -61,8 +61,8 @@ public class PostController {
         post.setPostText(text);
         postService.addPost(post);
         
-        ResultSet<String> resultSet = new ResultSet<>();
-        resultSet.setStateCode(ResultSet.RES_SUCCESS);
-        return resultSet;
+        ResponseResult<String> result = new ResponseResult<>();
+        result.setStateCode(ResponseResult.RES_SUCCESS);
+        return result;
     }
 }

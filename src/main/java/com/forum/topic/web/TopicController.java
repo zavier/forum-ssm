@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,7 +81,7 @@ public class TopicController {
      * @return
      */
     @RequestMapping(value = "/addTopic/{boardId}", method = RequestMethod.POST)
-    public String addTopic(HttpServletRequest request, @PathVariable String boardId, Topic topic) {
+    public String addTopic(HttpServletRequest request, @PathVariable String boardId, @Valid Topic topic) {
         User user = (User) request.getSession().getAttribute("LOGINUSER");
         topic.setId(UUIDUtil.getUUIDPrimaryKey());
         topic.setUserId(user.getId());

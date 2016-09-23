@@ -2,7 +2,7 @@ package com.forum.util.entity;
 
 import java.util.List;
 
-public class ResultSet<T> {
+public class ResponseResult<T> {
 
     /**
      * 处理结果成功

@@ -2,11 +2,14 @@ package com.forum.entity;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+
 public class Post {
     private String id;
 
     private Date createTime;
 
+    @NotNull
     private String postText;
 
     private String postTitle;

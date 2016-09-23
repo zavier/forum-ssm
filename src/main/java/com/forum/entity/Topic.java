@@ -2,6 +2,8 @@ package com.forum.entity;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+
 public class Topic {
     private String id;
 
@@ -11,10 +13,12 @@ public class Topic {
 
     private Date lastPost;
 
+    @NotNull
     private String topicContent;
 
     private Integer topicReplies;
 
+    @NotNull
     private String topicTitle;
 
     private Integer topicView;
