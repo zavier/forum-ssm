@@ -103,7 +103,7 @@ var indexFormatter = function(value, row, index) {
 
 // 显示主题帖标题列
 var topicTitleFormatter = function(value, row, index) {
-	return '<a href="topic/showTopicDetails/' + row.topic.id + '">' 
+	return '<a href="' + contextPath + '/topic/showTopicDetails/' + row.topic.id + '">' 
 			 + row.topic.topicTitle + '</a>';
 }
 
