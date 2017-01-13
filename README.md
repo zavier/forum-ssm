@@ -1,2 +1,2 @@
 # forum-ssm
-SSM实现的forum
+使用SSM框架实现的小论坛程序
