@@ -1,6 +1,8 @@
 # forum-ssm
 使用 Spring, Spring MVC, Mybatis 实现的小论坛程序
+
 数据库为 MySQL
+
 前台使用 Bootstrap, Bootstrap-table, UEditor
 
 登录后才会显示出管理板块的按钮和发帖按钮
