@@ -1,7 +1,9 @@
 # forum-ssm
-使用SSM框架实现的小论坛程序
+使用 Spring, Spring MVC, Mybatis 实现的小论坛程序
+数据库为 MySQL
+前台使用 Bootstrap, Bootstrap-table, UEditor
 
-登录后会显示出管理板块的按钮和发帖按钮
+登录后才会显示出管理板块的按钮和发帖按钮
 
 http://119.23.110.103/forum-ssm/
 
