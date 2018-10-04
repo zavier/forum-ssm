@@ -1,4 +1,7 @@
 # forum-ssm
+
+![](http://img.shields.io/travis/zavier/forum-ssm.svg)
+
 使用 Spring, Spring MVC, Mybatis 实现的小论坛程序
 
 数据库为 MySQL
@@ -7,7 +10,7 @@
 
 登录后才会显示出管理板块的按钮和发帖按钮
 
-测试demo : [http://119.23.110.103/forum-ssm/](http://119.23.110.103/forum-ssm/)
+测试demo : [http://47.93.214.100:8080/](http://47.93.214.100:8080/)
 
 测试账号：zavier123
 密码：123456
